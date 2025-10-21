@@ -1,11 +1,10 @@
-import React from "react";
-import { createContext } from "react";
+import React, { createContext, useState } from "react";
 
 interface UserContextType {
   userId: string | null;
-  setUserId: (id: string | null) => void;
+  setUserId: React.Dispatch<React.SetStateAction<string | null>>;
   userName: string | null;
-  setUserName: (name: string | null) => void;
+  setUserName: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -22,8 +21,8 @@ interface UserContextProviderProps {
 const UserContextProvider: React.FC<UserContextProviderProps> = ({
   children,
 }) => {
-  const [userId, setUserId] = React.useState<string | null>("null");
-  const [userName, setUserName] = React.useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
 
   const value = {
     userId,

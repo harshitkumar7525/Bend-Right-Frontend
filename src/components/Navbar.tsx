@@ -4,25 +4,33 @@ import {
   DisclosurePanel,
   Menu,
   MenuButton,
-  MenuItem,
-  MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import navigationBase from "../utils/NavItems";
-import { NavLink } from "react-router-dom";
-import type { NavItem } from "../utils/NavItems";
-
+import navigationBase from "../utils/navigationBase";
+import { NavLink, useNavigate } from "react-router-dom";
+import type { NavItem } from "../types/NavItem";
 import icon from "../assets/icon.png";
 import user from "../assets/user.png";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContextProvider";
+import MenuItemsComponent from "./MenuItemsComponent";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  const { userId } = useContext(UserContext);
+  const { userId, setUserId, setUserName } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleSignOut = (event: React.MouseEvent) => {
+    event.preventDefault();
+    setUserId(null);
+    setUserName(null);
+    localStorage.removeItem("jwtToken");
+    navigate("/");
+  };
+
   const checkRenderable = (item: NavItem) => {
     if (item.name === "Dashboard" || item.name === "Sign Out") {
       return Boolean(userId);
@@ -31,6 +39,7 @@ export default function Navbar() {
     }
     return true;
   };
+
   return (
     <Disclosure
       as="nav"
@@ -77,6 +86,9 @@ export default function Navbar() {
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )
                       }
+                      onClick={
+                        item.name === "Sign Out" ? handleSignOut : undefined
+                      }
                     >
                       {item.name}
                     </NavLink>
@@ -106,36 +118,7 @@ export default function Navbar() {
                   className="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10"
                 />
               </MenuButton>
-
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-800 py-1 outline -outline-offset-1 outline-white/10 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-              >
-                <MenuItem>
-                  <NavLink
-                    to="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
-                  >
-                    Your profile
-                  </NavLink>
-                </MenuItem>
-                <MenuItem>
-                  <NavLink
-                    to="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
-                  >
-                    Settings
-                  </NavLink>
-                </MenuItem>
-                <MenuItem>
-                  <NavLink
-                    to="#"
-                    className="block px-4 py-2 text-sm text-gray-300 data-focus:bg-white/5 data-focus:outline-hidden"
-                  >
-                    Sign out
-                  </NavLink>
-                </MenuItem>
-              </MenuItems>
+              {userId && <MenuItemsComponent handleSignOut={handleSignOut} />}
             </Menu>
           </div>
         </div>

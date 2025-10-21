@@ -1,8 +1,4 @@
-type NavItem = {
-  name: string;
-  href: string;
-  current?: boolean;
-};
+import type { NavItem } from "../types/NavItem";
 const navigationBase: NavItem[] = [
   {
     name: "Home",
@@ -23,7 +19,6 @@ const navigationBase: NavItem[] = [
   {
     name: "Sign Out",
     href: "/signout",
-  }
+  },
 ];
 export default navigationBase;
-export type { NavItem };
