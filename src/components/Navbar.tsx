@@ -82,7 +82,7 @@ export default function Navbar() {
                         classNames(
                           isActive
                             ? "bg-gray-950/50 text-white"
-                            : "text-gray-300 hover:bg-white/5 hover:text-white",
+                            : "text-black hover:bg-white/5 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )
                       }
@@ -104,7 +104,7 @@ export default function Navbar() {
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="size-6" />
+              <BellIcon aria-hidden="true" className="size-6 text-gray-500 hover:text-gray-900" />
             </button>
 
             {/* Profile dropdown */}
