@@ -1,5 +1,14 @@
+import GlassNavbar from "@/components/GlassBar";
+
 const Signin = () => {
-  return <div>Signin</div>;
+  return (
+    <>
+      <GlassNavbar />
+      <div>
+        Sign in
+      </div>
+    </>
+  );
 };
 
 export default Signin;
