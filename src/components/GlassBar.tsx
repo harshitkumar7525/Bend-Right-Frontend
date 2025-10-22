@@ -4,7 +4,7 @@ import NavigationBarLink from "./ui/NavigationBarLink";
 import type { NavItem } from "@/types/NavItem";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContextProvider";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "./ThemeToggle";
 
 export const GlassNavbar = () => {
@@ -19,7 +19,7 @@ export const GlassNavbar = () => {
     navigate("/");
   };
 
-  const checkRenderable = (item: NavItem) => {
+  const checkRenderable = (item: NavItem): boolean => {
     if (item.name === "Dashboard" || item.name === "Sign Out") {
       return Boolean(userId);
     } else if (item.name === "Sign In" || item.name === "Sign Up") {
@@ -32,10 +32,10 @@ export const GlassNavbar = () => {
     <div className="w-full p-4">
       <nav className="flex items-center justify-between w-full max-w-3xl mx-auto rounded-full bg-black/40 backdrop-blur-lg px-6 py-3 border border-white/10">
         {/* Left Side: Logo and Title */}
-        <a href="/" className="flex items-center gap-3">
+        <NavLink to="/" className="flex items-center gap-3">
           <img src={LogoIcon} alt="Logo" className="h-7 w-7" />
           <span className="text-white text-lg font-medium">Bend Right</span>
-        </a>
+        </NavLink>
 
         {/* Right Side: Navigation Links */}
         <div className="flex items-center gap-6">
