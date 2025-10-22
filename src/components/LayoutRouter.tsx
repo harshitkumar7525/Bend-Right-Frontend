@@ -15,7 +15,7 @@ const LayoutRouter: React.FC = () => {
     // if the user is logged in
     if (isPublicRoute) {
       // and trying to access a public route
-      return <Navigate to="/dashboard" replace />; // redirect to dashboard
+      return <Navigate to="/home" replace />; // redirect to home
     }
 
     // If they are on a private page, show the private app layout.
