@@ -2,7 +2,7 @@ import type { NavItem } from "../types/NavItem";
 const navigationBase: NavItem[] = [
   {
     name: "Home",
-    href: "/",
+    href: "/home",
   },
   {
     name: "Dashboard",
