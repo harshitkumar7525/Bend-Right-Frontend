@@ -32,7 +32,7 @@ const PublicLayout: React.FC = () => {
           animateBy="words"
           direction="top"
           onAnimationComplete={() => {}}
-          className="text-9xl md:text-6xl lg:text-7xl font-bold text-white"
+          className="text-9xl md:text-4xl lg:text-7xl sm:text-2xl font-bold text-white"
         />
 
         <BlurText
@@ -41,7 +41,7 @@ const PublicLayout: React.FC = () => {
           animateBy="words"
           direction="top"
           onAnimationComplete={() => {}}
-          className="text-2xl md:text-4xl lg:text-5xl font-semibold text-white mt-4"
+          className="text-2xl md:text-xl lg:text-2xl sm:text-base font-semibold text-white mt-4"
         />
 
         <BlurText
@@ -50,14 +50,14 @@ const PublicLayout: React.FC = () => {
           animateBy="words"
           direction="top"
           onAnimationComplete={() => {}}
-          className="text-xl md:text-2xl lg:text-3xl text-white mt-2"
+          className="text-2xl md:text-xl lg:text-2xl sm:text-base font-semibold text-white mt-4"
         />
         <div className="mt-8">
           <NavLink to="/signup">
-            <Button className="px-8 py-7 text-lg">Sign Up</Button>
+            <Button className="px-8 py-7 text-lg md:py-5 md:px-4 sm:py-3 sm:px-2 mr-2">Sign Up</Button>
           </NavLink>
           <NavLink to="/signin">
-            <Button variant="outline" className="ml-4 px-8 py-7 text-lg">
+            <Button variant="outline" className="px-8 py-7 text-lg md:py-5 md:px-4 sm:py-3 sm:px-2">
               Sign In
             </Button>
           </NavLink>

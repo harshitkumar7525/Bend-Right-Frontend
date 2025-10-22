@@ -1,10 +1,10 @@
 import React from 'react'
 import {Outlet} from 'react-router-dom';
-import Navbar from './Navbar';
+import GlassNavbar from './GlassBar';
 const RootLayout: React.FC = () => {
   return (
     <>
-      <Navbar />
+      <GlassNavbar />
       <Outlet />
     </>
   )
