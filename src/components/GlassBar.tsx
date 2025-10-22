@@ -5,6 +5,7 @@ import type { NavItem } from "@/types/NavItem";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContextProvider";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const GlassNavbar = () => {
   const { userId, setUserId, setUserName } = useContext(UserContext);
@@ -38,13 +39,16 @@ export const GlassNavbar = () => {
 
         {/* Right Side: Navigation Links */}
         <div className="flex items-center gap-6">
+          <ThemeToggle />
           {navigationBase.map((link) => {
             if (!checkRenderable(link)) return null;
             return (
               <NavigationBarLink
                 key={link.name}
                 link={{ name: link.name, href: link.href }}
-                handleSignOut={link.name === "Sign Out" ? handleSignOut : undefined}
+                handleSignOut={
+                  link.name === "Sign Out" ? handleSignOut : undefined
+                }
               />
             );
           })}

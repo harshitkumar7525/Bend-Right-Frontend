@@ -21,7 +21,7 @@ interface UserContextProviderProps {
 const UserContextProvider: React.FC<UserContextProviderProps> = ({
   children,
 }) => {
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>("null");
   const [userName, setUserName] = useState<string | null>(null);
 
   const value = {
