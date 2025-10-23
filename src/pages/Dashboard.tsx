@@ -1,6 +1,6 @@
-import WelcomeUserCard from "@/components/WelcomeUserCard";
-import YogaList from "@/components/YogaList";
-import PastData from "@/components/PastData";
+import WelcomeUserCard from "@/components/dashboard/WelcomeUserCard.tsx";
+import YogaList from "@/components/dashboard/YogaList.tsx";
+import PastData from "@/components/dashboard/PastData.tsx";
 
 const Dashboard = () => {
   return (

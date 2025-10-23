@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import RootLayout from "./RootLayout";
-import { UserContext } from "../context/UserContextProvider";
+import RootLayout from "../Layouts/RootLayout.tsx";
+import { UserContext } from "../../context/UserContextProvider.tsx";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const LayoutRouter: React.FC = () => {

@@ -1,11 +1,11 @@
-import LogoIcon from "../assets/icon.png";
-import navigationBase from "@/utils/navigationBase";
-import NavigationBarLink from "./ui/NavigationBarLink";
-import type { NavItem } from "@/types/NavItem";
+import LogoIcon from "../../assets/icon.png";
+import navigationBase from "@/utils/navigationBase.ts";
+import NavigationBarLink from "./NavigationBarLink.tsx";
+import type { NavItem } from "@/types/NavItem.ts";
 import { useContext } from "react";
-import { UserContext } from "@/context/UserContextProvider";
+import { UserContext } from "@/context/UserContextProvider.tsx";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "../themes/ThemeToggle.tsx";
 
 export const GlassNavbar = () => {
   const { userId, setUserId, setUserName } = useContext(UserContext);

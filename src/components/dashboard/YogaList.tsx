@@ -1,4 +1,4 @@
-import { ListScrollArea } from "./ListScrollArea";
+import { ListScrollArea } from "./ListScrollArea.tsx";
 
 const YogaList = () => {
   return (

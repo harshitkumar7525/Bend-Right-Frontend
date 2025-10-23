@@ -1,6 +1,6 @@
-import Background from "@/components/Background";
-import GlassNavbar from "@/components/GlassBar";
-import { SignupCard } from "@/components/SignupCard";
+import Background from "@/components/backgrounds/Background.tsx";
+import GlassNavbar from "@/components/Navbar/GlassBar.tsx";
+import { SignupCard } from "@/components/forms/SignupCard.tsx";
 
 const Signup = () => {
   return (

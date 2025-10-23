@@ -1,5 +1,5 @@
-import { homeImagesData } from "@/utils/imageData"
-import Masonry from "./Masonry"
+import { homeImagesData } from "@/utils/imageData.ts"
+import Masonry from "../ui/Masonry.tsx"
 
 const HomeBackground = () => {
   return (

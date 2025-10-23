@@ -1,17 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
-import LayoutRouter from "./LayoutRouter";
-import PublicLayout from "./PublicLayout";
-import { ProtectedRoute } from "./ProtectedRoute";
+import LayoutRouter from "./LayoutRouter.tsx";
+import PublicLayout from "../Layouts/PublicLayout.tsx";
+import { ProtectedRoute } from "./ProtectedRoute.tsx";
 
-const ErrorPage = lazy(() => import("../pages/ErrorPage"));
-const Signin = lazy(() => import("@/pages/Signin"));
-const Signup = lazy(() => import("@/pages/Signup"));
-const Home = lazy(() => import("@/pages/Home"));
-const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const ErrorPage = lazy(() => import("../../pages/ErrorPage.tsx"));
+const Signin = lazy(() => import("@/pages/Signin.tsx"));
+const Signup = lazy(() => import("@/pages/Signup.tsx"));
+const Home = lazy(() => import("@/pages/Home.tsx"));
+const Dashboard = lazy(() => import("@/pages/Dashboard.tsx"));
 const VideoChat = lazy(() =>
-  import("./VideoChat").then((module) => ({ default: module.VideoChat }))
+  import("../VideoChat.tsx").then((module) => ({ default: module.VideoChat }))
 );
 
 const LazyLoadingFallback = () => (

@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import GlassNavbar from "./GlassBar";
+import GlassNavbar from "../Navbar/GlassBar.tsx";
 const RootLayout: React.FC = () => {
   const location = window.location.pathname;
   return (

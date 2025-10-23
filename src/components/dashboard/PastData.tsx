@@ -6,9 +6,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import TableEntry from "./TableEntry";
-import { type SessionData } from "@/types/SessionData";
+} from "@/components/ui/table.tsx";
+import TableEntry from "./TableEntry.tsx";
+import { type SessionData } from "@/types/SessionData.ts";
 const pastDataSample: SessionData[] = [
   {
     sessionId: "S001",

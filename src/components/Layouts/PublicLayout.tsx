@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { UserContext } from "../context/UserContextProvider";
-import BlurText from "./ui/BlurText";
-import { Button } from "../components/ui/button";
+import { UserContext } from "../../context/UserContextProvider.tsx";
+import BlurText from "../ui/BlurText.tsx";
+import { Button } from "../ui/button.tsx";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useTheme } from "./ThemeProvider";
-import Background from "./Background";
+import { useTheme } from "../themes/ThemeProvider.tsx";
+import Background from "../backgrounds/Background.tsx";
 const PublicLayout: React.FC = () => {
   const { userId } = useContext(UserContext);
   const { theme } = useTheme();

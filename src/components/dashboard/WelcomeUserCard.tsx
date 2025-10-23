@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { UserContext } from "@/context/UserContextProvider";
-import BlurText from "./ui/BlurText";
-import { useTheme } from "./ThemeProvider";
+import { UserContext } from "@/context/UserContextProvider.tsx";
+import BlurText from "../ui/BlurText.tsx";
+import { useTheme } from "../themes/ThemeProvider.tsx";
 const WelcomeUserCard = () => {
   const { userName } = useContext(UserContext);
   const { theme } = useTheme();

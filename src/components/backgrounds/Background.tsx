@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { useTheme } from "./ThemeProvider";
-import Beams from "./ui/Beams";
-import Iridescence from "@/components/ui/Iridescence";
+import { useTheme } from "../themes/ThemeProvider.tsx";
+import Beams from "./Beams.tsx";
+import Iridescence from "@/components/backgrounds/Iridescence.tsx";
 
 const Background = () => {
   const location = useLocation();

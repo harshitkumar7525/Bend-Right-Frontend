@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Masonry from "@/components/Masonry";
+import Masonry from "@/components/ui/Masonry.tsx";
 import { homeImagesData } from "@/utils/imageData";
 import BlurText from "@/components/ui/BlurText";
 import { Button } from "@/components/ui/button";
