@@ -26,8 +26,7 @@ export function ListScrollArea() {
       <ScrollArea className="h-48 w-full rounded-md border">
         <div className="p-4">
           {poses.map((pose) => {
-            let link=pose.trim().toLowerCase();
-            link = link.replace(/\s+/g, '-');
+            const link=pose.trim().toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
             return (
               <NavLink to={`/video/${link}`} key={pose} className="block">
                 <React.Fragment key={pose}>
