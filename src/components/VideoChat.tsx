@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react"; // Added React import
 import { NavLink, useParams } from "react-router-dom";
-import { X } from "lucide-react";
+import { X, ChevronDown, ChevronUp } from "lucide-react"; // Added new icons
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ErrorPage from "@/pages/ErrorPage";
@@ -9,8 +9,127 @@ interface ChatMessage {
   id: string;
   text: string;
   timestamp: Date;
-  sender: "user" | "other";
+  sender: "agent" | "user";
 }
+
+
+interface DraggableChatWindowProps {
+  messages: ChatMessage[];
+  poseParam: string | undefined;
+}
+
+const DraggableChatWindow: React.FC<DraggableChatWindowProps> = ({
+  messages,
+  poseParam,
+}) => {
+  const [position, setPosition] = useState({ x: 50, y: 50 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
+  const dragOffset = useRef({ x: 0, y: 0 });
+
+  const latestMessages = messages.slice(-10);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    dragOffset.current = {
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    };
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setPosition({
+        x: e.clientX - dragOffset.current.x,
+        y: e.clientY - dragOffset.current.y,
+      });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
+
+  return (
+    <div
+      className="absolute w-96 bg-card border rounded-lg shadow-lg flex flex-col z-20"
+      style={{
+        transform: `translate(${position.x}px, ${position.y}px)`,
+      }}
+    >
+      {/* Draggable Header */}
+      <div
+        className="p-4 border-b cursor-move rounded-t-lg flex justify-between items-center" // <-- Added flex styles
+        onMouseDown={handleMouseDown}
+      >
+        <div>
+          <h2 className="text-lg font-semibold">Chat</h2>
+          {poseParam && !isMinimized && ( // <-- Hide pose when minimized
+            <p className="text-sm text-muted-foreground">Pose: {poseParam}</p>
+          )}
+        </div>
+
+        {/* --- Minimize Button --- */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full"
+          onMouseDown={(e) => {
+            e.stopPropagation();
+            setIsMinimized(!isMinimized);
+          }}
+        >
+          {isMinimized ? (
+            <ChevronUp className="h-5 w-5" />
+          ) : (
+            <ChevronDown className="h-5 w-5" />
+          )}
+        </Button>
+      </div>
+
+      {/* Chat Messages - Conditionally Rendered */}
+      {!isMinimized && (
+        <ScrollArea className="h-96 p-4">
+          <div className="space-y-4">
+            {latestMessages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.sender === "user" ? "justify-end" : "justify-start"
+                }`}
+              >
+                <div
+                  className={`max-w-[80%] rounded-lg p-3 ${
+                    message.sender === "user"
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted"
+                  }`}
+                >
+                  <p className="text-sm">{message.text}</p>
+                  <p className="text-xs opacity-70 mt-1">
+                    {message.timestamp.toLocaleTimeString()}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+      )}
+    </div>
+  );
+};
+
 
 export const VideoChat = () => {
   const { pose: poseParam } = useParams<{ pose: string }>();
@@ -39,7 +158,9 @@ export const VideoChat = () => {
           videoRef.current.srcObject = stream;
         }
 
-        webSocketRef.current = new WebSocket(import.meta.env.VITE_WS_URL ||"ws://localhost:8000/stream");
+        webSocketRef.current = new WebSocket(
+          import.meta.env.VITE_WS_URL || "ws://localhost:8000/stream"
+        );
         webSocketRef.current.onopen = () => {
           console.log("WebSocket connected. Starting media recorder.");
 
@@ -156,9 +277,9 @@ export const VideoChat = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-background">
-      {/* Video Section */}
-      <div className="flex-1 relative bg-black">
+    <div className="h-screen w-full relative bg-background overflow-hidden">
+      {/* Full Screen Video Section */}
+      <div className="absolute inset-0 bg-black z-0">
         <video
           ref={videoRef}
           autoPlay
@@ -166,54 +287,21 @@ export const VideoChat = () => {
           muted
           className="w-full h-full object-cover"
         />
-
-        {/* End Call Button */}
-        <NavLink to="/dashboard">
-          <Button
-            variant="destructive"
-            size="icon"
-            className="absolute top-4 right-4 rounded-full h-12 w-12"
-          >
-            <X className="h-6 w-6" />
-          </Button>
-        </NavLink>
       </div>
 
-      {/* Chat Section */}
-      <div className="w-96 bg-card border-l flex flex-col">
-        <div className="p-4 border-b">
-          <h2 className="text-lg font-semibold">Chat</h2>
-          {poseParam && (
-            <p className="text-sm text-muted-foreground">Pose: {poseParam}</p>
-          )}
-        </div>
+      {/* End Call Button (Over Video) */}
+      <NavLink to="/dashboard" className="absolute top-4 right-4 z-30">
+        <Button
+          variant="destructive"
+          size="icon"
+          className="rounded-full h-12 w-12"
+        >
+          <X className="h-6 w-6" />
+        </Button>
+      </NavLink>
 
-        <ScrollArea className="flex-1 p-4">
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${
-                  message.sender === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg p-3 ${
-                    message.sender === "user"
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted"
-                  }`}
-                >
-                  <p className="text-sm">{message.text}</p>
-                  <p className="text-xs opacity-70 mt-1">
-                    {message.timestamp.toLocaleTimeString()}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </ScrollArea>
-      </div>
+      {/* Draggable Chat Window */}
+      <DraggableChatWindow messages={messages} poseParam={poseParam} />
     </div>
   );
 };
