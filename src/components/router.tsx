@@ -6,6 +6,8 @@ import PublicLayout from "./PublicLayout";
 import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import Signup from "@/pages/Signup";
+import { VideoChat } from "./VideoChat";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -14,10 +16,25 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <PublicLayout /> },
-      { path: "/home", element: <Home /> },
       { path: "/signup", element: <Signup /> },
       { path: "/signin", element: <Signin /> },
-      { path: "/dashboard", element: <Dashboard /> },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          { path: "/home", element: <Home /> },
+          { path: "/dashboard", element: <Dashboard /> },
+        ],
+      },
+    ],
+  },
+  {
+    element: <ProtectedRoute />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/video/:pose",
+        element: <VideoChat />,
+      },
     ],
   },
 ]);

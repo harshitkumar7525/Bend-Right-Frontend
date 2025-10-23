@@ -25,14 +25,18 @@ export function ListScrollArea() {
       </h4>
       <ScrollArea className="h-48 w-full rounded-md border">
         <div className="p-4">
-          {poses.map((pose) => (
-            <NavLink to="#" key={pose} className="block">
-              <React.Fragment key={pose}>
-                <div className="text-sm">{pose}</div>
-                <Separator className="my-2" />
-              </React.Fragment>
-            </NavLink>
-          ))}
+          {poses.map((pose) => {
+            let link=pose.trim().toLowerCase();
+            link = link.replace(/\s+/g, '-');
+            return (
+              <NavLink to={`/video/${link}`} key={pose} className="block">
+                <React.Fragment key={pose}>
+                  <div className="text-sm">{pose}</div>
+                  <Separator className="my-2" />
+                </React.Fragment>
+              </NavLink>
+            );
+          })}
         </div>
       </ScrollArea>
     </>
