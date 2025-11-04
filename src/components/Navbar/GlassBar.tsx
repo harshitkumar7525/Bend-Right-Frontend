@@ -15,7 +15,7 @@ export const GlassNavbar = () => {
     event.preventDefault();
     setUserId(null);
     setUserName(null);
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
     navigate("/");
   };
 

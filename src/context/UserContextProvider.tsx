@@ -1,4 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+
+interface DecodedToken {
+  uid: number;
+  uname: string;
+  exp: number;
+  iat: number;
+}
 
 interface UserContextType {
   userId: string | null;
@@ -24,11 +32,37 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
   const [userId, setUserId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
 
+  // 🧠 Automatically check JWT on app load
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded: DecodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+
+        if (decoded.exp > currentTime) {
+          // ✅ Token valid — restore session
+          setUserId(String(decoded.uid));
+          setUserName(decoded.uname);
+        } else {
+          // ❌ Token expired — cleanup
+          console.warn("JWT expired. Clearing localStorage...");
+          localStorage.removeItem("token");
+        }
+      } catch (error) {
+        console.error("Invalid JWT:", error);
+        localStorage.removeItem("token");
+      }
+    }
+  }, []);
+
+  
+
   const value = {
     userId,
     setUserId,
     userName,
-    setUserName,
+    setUserName
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

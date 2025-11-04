@@ -54,17 +54,19 @@ export function SignupCard() {
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, data)
       .then((response) => {
         localStorage.setItem("token", response.data.token);
-        setUserId(response.data._id);
+        setUserId(response.data.userId);
         setUserName(response.data.userName);
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.token}`;
+        navigate("/home");
       })
       .catch((error) => {
         console.error("Sign Up Error:", error);
-
         const message =
           error.response?.data?.error ||
           error.response?.data?.message ||
           "Something went wrong. Please try again.";
-
         setError("signupError", { message });
       });
   };

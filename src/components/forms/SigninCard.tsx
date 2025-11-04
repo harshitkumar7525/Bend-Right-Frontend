@@ -37,7 +37,7 @@ export function SigninCard() {
 
   const email = watch("email");
   const password = watch("password");
-  const { userId, setUserId,setUserName } = useContext(UserContext);
+  const { userId, setUserId, setUserName } = useContext(UserContext);
 
   useEffect(() => {
     if (userId) {
@@ -51,8 +51,15 @@ export function SigninCard() {
       .post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, data)
       .then((response) => {
         localStorage.setItem("token", response.data.token);
-        setUserId(response.data._id);
-        setUserName(response.data.name);
+
+        setUserId(response.data.userId);
+        setUserName(response.data.userName);
+
+        axios.defaults.headers.common[
+          "Authorization"
+        ] = `Bearer ${response.data.token}`;
+
+        navigate("/home");
       })
       .catch((error) => {
         console.error("Sign In Error:", error);
@@ -65,6 +72,7 @@ export function SigninCard() {
         setError("loginError", { message });
       });
   };
+
   return (
     <Card className="w-full max-w-sm">
       <CardHeader>
