@@ -13,6 +13,8 @@ interface UserContextType {
   setUserId: React.Dispatch<React.SetStateAction<string | null>>;
   userName: string | null;
   setUserName: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedPose: string | null;
+  setPose: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -20,6 +22,8 @@ export const UserContext = createContext<UserContextType>({
   setUserId: () => {},
   userName: null,
   setUserName: () => {},
+  selectedPose: null,
+  setPose: () => {},
 });
 
 interface UserContextProviderProps {
@@ -31,8 +35,8 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
 }) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [selectedPose, setPose] = useState<string | null>(null);
 
-  // 🧠 Automatically check JWT on app load
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -41,11 +45,11 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
         const currentTime = Date.now() / 1000;
 
         if (decoded.exp > currentTime) {
-          // ✅ Token valid — restore session
+          // Token valid — restore session
           setUserId(String(decoded.uid));
           setUserName(decoded.uname);
         } else {
-          // ❌ Token expired — cleanup
+          // Token expired — cleanup
           console.warn("JWT expired. Clearing localStorage...");
           localStorage.removeItem("token");
         }
@@ -62,7 +66,9 @@ const UserContextProvider: React.FC<UserContextProviderProps> = ({
     userId,
     setUserId,
     userName,
-    setUserName
+    setUserName,
+    selectedPose,
+    setPose,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

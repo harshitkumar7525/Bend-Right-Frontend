@@ -30,7 +30,6 @@ const PastData = () => {
         );
         if (response.ok) {
           const data: SessionData[] = await response.json();
-          console.log("Fetched past data:", data);
           data.reverse();
           setPastData(data);
         } else {
